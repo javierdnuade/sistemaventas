@@ -21,17 +21,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String name;
 
     private String description;
 
     private int stock;
 
+    @Column(nullable = false)
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "id_category")
-    private Category category;
+    @JoinColumn(name = "id_category", nullable = false) // Indicamos el campo de la clave foranea en la tabla
+    private Category category; // Muchos productos pertenecen a una categoria
 
     @Column(columnDefinition = "TINYINT(1) default 1")
     private Boolean status;
