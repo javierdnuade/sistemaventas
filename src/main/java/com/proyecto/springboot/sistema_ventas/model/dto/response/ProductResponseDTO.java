@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 public class ProductResponseDTO {
     private String name;
+    private String code;
     private String descripcion;
     private Integer stock;
     private BigDecimal price;

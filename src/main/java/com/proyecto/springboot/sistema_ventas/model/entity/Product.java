@@ -24,6 +24,9 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String code;
+
     private String description;
 
     private int stock;
@@ -37,5 +40,4 @@ public class Product {
 
     @Column(columnDefinition = "TINYINT(1) default 1")
     private Boolean status;
-
 }

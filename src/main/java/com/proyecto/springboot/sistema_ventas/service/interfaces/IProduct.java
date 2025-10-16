@@ -1,4 +1,4 @@
-package com.proyecto.springboot.sistema_ventas.service;
+package com.proyecto.springboot.sistema_ventas.service.interfaces;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,7 +13,7 @@ public interface IProduct {
 
     List<ProductResponseDTO> getAllByStatus(boolean status);
 
-    ProductResponseDTO save (ProductRequestDTO productRequest);
+    ProductResponseDTO save(ProductRequestDTO productRequest);
 
     Optional<ProductResponseDTO> delete(int id);
 

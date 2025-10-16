@@ -23,6 +23,10 @@ public class ProductRequestDTO {
     @Size(min = 8, max = 100, message = "La descripcion del producto debe contener entre 8 y 100 caracteres")
     private String description;
 
+    @NotBlank
+    @Size(min = 1, max = 15, message = "El codigo del producto debe contener entre 1 y 15 caracteres")
+    private String code;
+
     @NotNull(message = "El stock es obligatorio")
     @Min(value = 0, message = "El stock no puede ser negativo")
     private Integer stock;

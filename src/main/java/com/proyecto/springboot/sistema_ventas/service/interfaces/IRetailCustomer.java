@@ -1,4 +1,4 @@
-package com.proyecto.springboot.sistema_ventas.service;
+package com.proyecto.springboot.sistema_ventas.service.interfaces;
 
 import java.util.List;
 import java.util.Optional;
