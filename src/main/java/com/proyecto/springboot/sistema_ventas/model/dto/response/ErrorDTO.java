@@ -1,5 +1,8 @@
 package com.proyecto.springboot.sistema_ventas.model.dto.response;
 
+import java.time.LocalDateTime;
+
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +15,7 @@ public class ErrorDTO {
     private String code;
     private String message;
     private String path;
-    private String timestamp;  
+    private LocalDateTime timestamp;  
     private int statusHttp;       
 
 }

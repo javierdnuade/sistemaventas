@@ -1,10 +1,11 @@
 package com.proyecto.springboot.sistema_ventas.exceptions;
 
+import org.springframework.http.HttpStatus;
 
 public class NotFoundException extends BasedException {
 
     public NotFoundException(String code, String message) {
-        super(code, message);
+        super(code, message, HttpStatus.NOT_FOUND);
     }
 
     public static NotFoundException userNotFound() {
