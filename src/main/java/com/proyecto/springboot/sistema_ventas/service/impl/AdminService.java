@@ -1,36 +1,103 @@
 package com.proyecto.springboot.sistema_ventas.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.proyecto.springboot.sistema_ventas.model.dto.request.UserRequestDTO;
-import com.proyecto.springboot.sistema_ventas.model.dto.response.UserResponseDTO;
-import com.proyecto.springboot.sistema_ventas.service.interfaces.IUserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
-public class AdminService implements IUserService {
+import com.proyecto.springboot.sistema_ventas.exceptions.BadRequestException;
+import com.proyecto.springboot.sistema_ventas.exceptions.ConflictException;
+import com.proyecto.springboot.sistema_ventas.model.dto.request.AdminRequestDTO;
+import com.proyecto.springboot.sistema_ventas.model.dto.response.AdminResponseDTO;
+import com.proyecto.springboot.sistema_ventas.model.entity.Admin;
+import com.proyecto.springboot.sistema_ventas.model.entity.Role;
+import com.proyecto.springboot.sistema_ventas.repository.AdminRepository;
+import com.proyecto.springboot.sistema_ventas.repository.RoleRepository;
+import com.proyecto.springboot.sistema_ventas.service.interfaces.IAdminService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class AdminService implements IAdminService {
+
+    private final AdminRepository repository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional
     @Override
-    public UserResponseDTO save(UserRequestDTO userRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public AdminResponseDTO save(AdminRequestDTO adminRequest) {
+        if (adminRequest == null) {
+            throw new BadRequestException("P-101-REQUEST NULL", "Request body is null");
+        }
+        if (repository.existsByUsername(adminRequest.getUsername()) || repository.existsByEmail(adminRequest.getEmail())) {
+            throw ConflictException.userAlreadyExists();
+        }
+
+        // Agregamos todos los roles al admin
+        Set<Role> roles = new HashSet<>();
+        roleRepository.findByName("ROLE_ADMIN").ifPresent(roles::add);
+        roleRepository.findByName("ROLE_RETAIL").ifPresent(roles::add);
+        roleRepository.findByName("ROLE_WHOLESALE").ifPresent(roles::add);
+
+        // Codificamos la password
+        String encodedPassword = passwordEncoder.encode(adminRequest.getPassword());
+        
+        Admin admin = Admin.builder()
+            .username(adminRequest.getUsername())
+            .email(adminRequest.getEmail())
+            .password(encodedPassword)
+            .roles(roles)
+            .build();
+
+        repository.save(admin);
+        return AdminResponseDTO.builder()
+            .username(admin.getUsername())
+            .email(admin.getEmail())
+            .userType(admin.getClass().getSimpleName())  // "Admin"
+            .build();
     }
 
+    @Transactional
     @Override
-    public Optional<UserResponseDTO> delete(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public Optional<AdminResponseDTO> delete(int id) {
+        return repository.findById(id).map(admin -> {
+            repository.deleteById(id); // Lo borramos de la base (pero sigue en memoria porque JPA trabaja sobre la base)
+            return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
+                .username(admin.getUsername())
+                .email(admin.getEmail())
+                .userType("ADMIN")
+                .build();
+        });
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<UserResponseDTO> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    public Optional<AdminResponseDTO> findById(int id) {
+        return repository.findById(id).map(admin -> {
+            return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
+                .username(admin.getUsername())
+                .email(admin.getEmail())
+                .userType("ADMIN")
+                .build();
+        });
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public Optional<UserResponseDTO> findById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public List<AdminResponseDTO> findAll() {
+        return repository.findAll().stream().map(admin -> 
+            AdminResponseDTO.builder()
+                .username(admin.getUsername())
+                .email(admin.getEmail())
+                .userType("ADMIN")
+                .build()
+        )
+        .collect(Collectors.toList());
     }
 
 }

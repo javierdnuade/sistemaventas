@@ -1,14 +1,12 @@
 package com.proyecto.springboot.sistema_ventas.model.entity;
 
 import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
-@NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 @Setter
 @Getter
 public abstract class Customer extends User {

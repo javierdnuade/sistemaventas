@@ -10,12 +10,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 
 @Entity
 @DiscriminatorValue("WHOLESALE")
-@Data
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Data
 public class WholesaleCustomer extends Customer {
 
     private String street;
