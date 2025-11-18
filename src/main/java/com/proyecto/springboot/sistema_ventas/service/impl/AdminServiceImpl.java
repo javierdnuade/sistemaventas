@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto.springboot.sistema_ventas.exceptions.BadRequestException;
@@ -21,8 +22,9 @@ import com.proyecto.springboot.sistema_ventas.service.interfaces.IAdminService;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
-public class AdminService implements IAdminService {
+public class AdminServiceImpl implements IAdminService {
 
     private final AdminRepository repository;
     private final RoleRepository roleRepository;
@@ -58,33 +60,36 @@ public class AdminService implements IAdminService {
         return AdminResponseDTO.builder()
             .username(admin.getUsername())
             .email(admin.getEmail())
-            .userType(admin.getClass().getSimpleName())  // "Admin"
+            .userType("ADMIN")
             .build();
     }
 
     @Transactional
     @Override
-    public Optional<AdminResponseDTO> delete(int id) {
-        return repository.findById(id).map(admin -> {
-            repository.deleteById(id); // Lo borramos de la base (pero sigue en memoria porque JPA trabaja sobre la base)
-            return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
+    public AdminResponseDTO delete(int id) {
+        Admin admin = repository.findById(id)
+            .orElseThrow(() -> new BadRequestException("P-400-ADMIN NOT FOUND", "Admin with id " + id + " not found"));
+        
+        repository.deleteById(id); // Lo borramos de la base (pero sigue en memoria porque JPA trabaja sobre la base)
+        return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
                 .username(admin.getUsername())
                 .email(admin.getEmail())
                 .userType("ADMIN")
                 .build();
-        });
+
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<AdminResponseDTO> findById(int id) {
-        return repository.findById(id).map(admin -> {
-            return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
+    public AdminResponseDTO findById(int id) {
+        Admin admin = repository.findById(id)
+            .orElseThrow(() -> new BadRequestException("P-400-ADMIN NOT FOUND", "Admin with id " + id + " not found"));
+        
+        return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
                 .username(admin.getUsername())
                 .email(admin.getEmail())
                 .userType("ADMIN")
                 .build();
-        });
     }
 
     @Transactional(readOnly = true)
