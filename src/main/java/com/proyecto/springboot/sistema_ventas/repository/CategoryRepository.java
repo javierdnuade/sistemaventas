@@ -6,4 +6,5 @@ import com.proyecto.springboot.sistema_ventas.model.entity.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
 
+    boolean existsByName(String name);
 }

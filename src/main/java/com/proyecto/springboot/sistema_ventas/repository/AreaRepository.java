@@ -6,4 +6,5 @@ import com.proyecto.springboot.sistema_ventas.model.entity.Area;
 
 public interface AreaRepository extends JpaRepository<Area, Integer> {
 
+    boolean existsByName(String name);
 }

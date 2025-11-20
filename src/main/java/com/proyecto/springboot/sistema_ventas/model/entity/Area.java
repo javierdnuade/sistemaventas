@@ -22,4 +22,8 @@ public class Area {
 
     @OneToMany(mappedBy = "area")
     private List<WholesaleCustomer> wholesales;
+
+    public Area(String name) {
+        this.name = name;
+    }
 }

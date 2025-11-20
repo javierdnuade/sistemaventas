@@ -23,8 +23,13 @@ public class ConflictException extends BasedException {
         "La categoría '" + name + "' ya existe. Cambia el nombre");
     }
 
+    public static ConflictException areaAlreadyExists(String name) {
+        return new ConflictException("P-303-AREA_ALREADY_EXISTS",
+        "El area '" + name + "' ya existe. Cambia el nombre");
+    }
+
     public static ConflictException productNoStock(int productId) {
-        return new ConflictException("P-303-INSUFFICIENT_STOCK",
+        return new ConflictException("P-304-INSUFFICIENT_STOCK",
             "Stock insuficiente para el producto id: " + productId);
     }
 }

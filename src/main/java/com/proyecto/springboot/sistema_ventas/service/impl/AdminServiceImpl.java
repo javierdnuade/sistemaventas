@@ -2,7 +2,6 @@ package com.proyecto.springboot.sistema_ventas.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto.springboot.sistema_ventas.exceptions.BadRequestException;
 import com.proyecto.springboot.sistema_ventas.exceptions.ConflictException;
+import com.proyecto.springboot.sistema_ventas.exceptions.NotFoundException;
 import com.proyecto.springboot.sistema_ventas.model.dto.request.AdminRequestDTO;
 import com.proyecto.springboot.sistema_ventas.model.dto.response.AdminResponseDTO;
 import com.proyecto.springboot.sistema_ventas.model.entity.Admin;
@@ -34,10 +34,10 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public AdminResponseDTO save(AdminRequestDTO adminRequest) {
         if (adminRequest == null) {
-            throw new BadRequestException("P-101-REQUEST NULL", "Request body is null");
+            throw BadRequestException.invalidRequest(); // Arrojamos error personalizado de BadRequest
         }
         if (repository.existsByUsername(adminRequest.getUsername()) || repository.existsByEmail(adminRequest.getEmail())) {
-            throw ConflictException.userAlreadyExists();
+            throw ConflictException.userAlreadyExists(); // Arrojamos error personalizado de Conflict por usuario existente
         }
 
         // Agregamos todos los roles al admin
@@ -68,7 +68,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public AdminResponseDTO delete(int id) {
         Admin admin = repository.findById(id)
-            .orElseThrow(() -> new BadRequestException("P-400-ADMIN NOT FOUND", "Admin with id " + id + " not found"));
+            .orElseThrow(() -> NotFoundException.userNotFound(id));
         
         repository.deleteById(id); // Lo borramos de la base (pero sigue en memoria porque JPA trabaja sobre la base)
         return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
@@ -83,7 +83,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public AdminResponseDTO findById(int id) {
         Admin admin = repository.findById(id)
-            .orElseThrow(() -> new BadRequestException("P-400-ADMIN NOT FOUND", "Admin with id " + id + " not found"));
+            .orElseThrow( () -> NotFoundException.userNotFound(id));
         
         return AdminResponseDTO.builder() // Como todavia existe en memoria, llamamos a sus datos
                 .username(admin.getUsername())

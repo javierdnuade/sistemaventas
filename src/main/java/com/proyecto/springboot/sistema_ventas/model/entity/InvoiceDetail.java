@@ -1,5 +1,7 @@
 package com.proyecto.springboot.sistema_ventas.model.entity;
 
+import java.math.BigDecimal;
+
 import com.proyecto.springboot.sistema_ventas.model.entity.embeddable.UserInvoice;
 
 import jakarta.persistence.Column;
@@ -31,5 +33,8 @@ public class InvoiceDetail {
 
     @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
+    private BigDecimal line_total;
 
 }

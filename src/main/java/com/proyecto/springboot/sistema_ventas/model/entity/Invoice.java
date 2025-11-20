@@ -1,9 +1,11 @@
 package com.proyecto.springboot.sistema_ventas.model.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,9 @@ public class Invoice {
 
     private LocalDateTime date;
 
+    @Column(nullable = false)
+    private BigDecimal total;
+
     @ManyToOne // Relacion Bidireccional con el usuario que realiza la compra
     @JoinColumn(name = "id_customer", nullable = false) // Indicamos el campo de la clave foranea en la tabla
     private User customer;
@@ -32,4 +37,6 @@ public class Invoice {
     // Relación bidireccional con InvoiceDetail
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoiceDetail> invoiceDetails;
+
+
 }

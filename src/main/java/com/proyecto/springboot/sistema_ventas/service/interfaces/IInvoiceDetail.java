@@ -5,5 +5,4 @@ import com.proyecto.springboot.sistema_ventas.model.dto.response.InvoiceDetailRe
 
 public interface IInvoiceDetail {
     InvoiceDetailResponseDTO addInvoiceDetail(InvoiceDetailRequestDTO detail);
-
 }

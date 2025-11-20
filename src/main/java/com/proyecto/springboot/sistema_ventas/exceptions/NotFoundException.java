@@ -8,23 +8,23 @@ public class NotFoundException extends BasedException {
         super(code, message, HttpStatus.NOT_FOUND);
     }
 
-    public static NotFoundException userNotFound() {
-        return new NotFoundException("P-400-USER_NOT_FOUND", "Usuario no encontrado");
+    public static NotFoundException userNotFound(int id) {
+        return new NotFoundException("P-400-USER_NOT_FOUND", "Usuario con id '" + id +  "'' no encontrado");
     }
 
-    public static NotFoundException productNotFound() {
-        return new NotFoundException("P-401-PRODUCT_NOT_FOUND", "Producto no encontrado");
+    public static NotFoundException productNotFound(int id) {
+        return new NotFoundException("P-401-PRODUCT_NOT_FOUND", "Producto con id '" + id + "' encontrado");
     }
 
-    public static NotFoundException categoryNotFound() {
-        return new NotFoundException("P-402-CATEGORY_NOT_FOUND", "Categoría no encontrada");
+    public static NotFoundException categoryNotFound(int id) {
+        return new NotFoundException("P-402-CATEGORY_NOT_FOUND", "Categoría con id '" + id + "' encontrada");
     }
 
-    public static NotFoundException areaNotFound() {
-        return new NotFoundException("P-403-AREA_NOT_FOUND", "Área no encontrada");
+    public static NotFoundException areaNotFound(int id) {
+        return new NotFoundException("P-403-AREA_NOT_FOUND", "Área con id '" + id + "' encontrada");
     }
 
-    public static NotFoundException invoiceNotFound() {
-        return new NotFoundException("P-404-INVOICE_NOT_FOUND", "Factura no encontrada");
+    public static NotFoundException invoiceNotFound(int id) {
+        return new NotFoundException("P-404-INVOICE_NOT_FOUND", "Factura con id '" + id + "' encontrada");
     }
 }

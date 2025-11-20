@@ -8,7 +8,7 @@ public class BadRequestException extends BasedException {
         super(code, message, HttpStatus.BAD_REQUEST);
     }
 
-    public static BadRequestException invalidRequest(String msg) {
-        return new BadRequestException("P-100-BAD_REQUEST", msg);
+    public static BadRequestException invalidRequest() {
+        return new BadRequestException("P-100-BAD_REQUEST", "Request body is null");
     }
 }
