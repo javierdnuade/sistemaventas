@@ -67,7 +67,12 @@ public class AreaServiceImpl implements IArea {
     @Transactional(readOnly = true)
     @Override
     public AreaResponseDTO findById(int id) {
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        Area area = repository.findById(id)
+            .orElseThrow( () -> NotFoundException.areaNotFound(id));
+
+        return AreaResponseDTO.builder()
+            .name(area.getName())
+            .build();
     }
 
 }

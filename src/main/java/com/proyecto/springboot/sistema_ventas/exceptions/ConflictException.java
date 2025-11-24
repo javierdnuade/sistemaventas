@@ -28,8 +28,8 @@ public class ConflictException extends BasedException {
         "El area '" + name + "' ya existe. Cambia el nombre");
     }
 
-    public static ConflictException productNoStock(int productId) {
+    public static ConflictException productNoStock(String name) {
         return new ConflictException("P-304-INSUFFICIENT_STOCK",
-            "Stock insuficiente para el producto id: " + productId);
+            "Stock insuficiente para el producto " + name);
     }
 }

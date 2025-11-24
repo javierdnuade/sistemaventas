@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class InvoiceDetailResponseDTO {
-    private Integer productId;
     private String productName;
     private int quantity;
     private BigDecimal line_total;

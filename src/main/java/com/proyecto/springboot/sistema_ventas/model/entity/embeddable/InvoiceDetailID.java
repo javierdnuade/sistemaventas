@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInvoice {
+public class InvoiceDetailID {
 
     private int productId;
     private int invoiceId;

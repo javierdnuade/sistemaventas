@@ -40,4 +40,8 @@ public class Product {
 
     @Column(columnDefinition = "TINYINT(1) default 1")
     private Boolean status;
+
+    public void restarStock(int quantity) {
+        this.stock -= quantity;
+    }
 }

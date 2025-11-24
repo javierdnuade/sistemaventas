@@ -2,7 +2,7 @@ package com.proyecto.springboot.sistema_ventas.model.entity;
 
 import java.math.BigDecimal;
 
-import com.proyecto.springboot.sistema_ventas.model.entity.embeddable.UserInvoice;
+import com.proyecto.springboot.sistema_ventas.model.entity.embeddable.InvoiceDetailID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -11,15 +11,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Entity
 @Table(name = "invoice_detail")
 @Data
 public class InvoiceDetail {
 
     @EmbeddedId
-    private UserInvoice id;
+    private InvoiceDetailID id;
 
     @ManyToOne
     @MapsId("productId")
