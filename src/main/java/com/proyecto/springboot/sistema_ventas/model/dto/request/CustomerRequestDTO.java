@@ -2,9 +2,11 @@ package com.proyecto.springboot.sistema_ventas.model.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
+@Getter
 public abstract class CustomerRequestDTO extends UserRequestDTO {
 
     @NotBlank

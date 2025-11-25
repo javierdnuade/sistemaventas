@@ -3,10 +3,12 @@ package com.proyecto.springboot.sistema_ventas.model.dto.request;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-public class RetailCustomerRequestDTO  {
+@Getter
+public class RetailCustomerRequestDTO extends CustomerRequestDTO {
 
     @NotNull(message = "El DNI es obligatorio")
     @Min(value = 1000000, message = "El DNI debe tener al menos 7 dígitos")

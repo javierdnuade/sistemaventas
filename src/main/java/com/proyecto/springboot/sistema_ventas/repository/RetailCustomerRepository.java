@@ -6,4 +6,7 @@ import com.proyecto.springboot.sistema_ventas.model.entity.RetailCustomer;
 
 public interface RetailCustomerRepository extends JpaRepository<RetailCustomer, Integer> {
 
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

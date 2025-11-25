@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.proyecto.springboot.sistema_ventas.model.entity.Invoice;
 
@@ -25,5 +26,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
         JOIN FETCH d.product p
         WHERE c.id = :customerId
         """)
-    List<Invoice> findAllByCustomer(int id);
+    List<Invoice> findAllByCustomer(@Param("customerId") Integer customerId);
 }

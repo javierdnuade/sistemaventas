@@ -9,4 +9,8 @@ import com.proyecto.springboot.sistema_ventas.model.entity.WholesaleCustomer;
 public interface WholesaleCustomerRepository extends JpaRepository<WholesaleCustomer, Integer>  {
 
     List<WholesaleCustomer> findAllByArea(int id);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

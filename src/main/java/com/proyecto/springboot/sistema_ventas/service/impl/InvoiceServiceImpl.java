@@ -134,6 +134,7 @@ public class InvoiceServiceImpl implements IInvoice {
         return invoiceDTOs;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public InvoiceResponseDTO findById(int id) {
         Invoice invoice = repository.findById(id)
@@ -159,6 +160,7 @@ public class InvoiceServiceImpl implements IInvoice {
         return dto;
     }
 
+    @Transactional
     @Override
     public InvoiceResponseDTO delete(int id) {
         Invoice invoice = repository.findById(id)
@@ -187,6 +189,7 @@ public class InvoiceServiceImpl implements IInvoice {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<InvoiceResponseDTO> getInvoicesByCustomer(int id) {
         

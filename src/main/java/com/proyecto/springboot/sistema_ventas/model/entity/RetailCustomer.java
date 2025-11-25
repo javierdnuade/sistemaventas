@@ -19,4 +19,6 @@ public class RetailCustomer extends Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true) // Indicamos el nombre del atributo en Invoice que mapea la relacion
     private List<Invoice> invoices;
+
+    private int dni;
 }
